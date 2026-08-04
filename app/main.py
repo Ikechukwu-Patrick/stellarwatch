@@ -1,10 +1,14 @@
+import asyncio
+
 from fastapi import FastAPI
 from sqlmodel import SQLModel
 
 from app.api.service_router import router as service_router
 from app.core.config import settings
 from app.db.database import engine
+from app.models.health_check import HealthCheck
 from app.models.service import Service
+from app.workers.monitor_worker import monitor_services
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -14,8 +18,11 @@ app = FastAPI(
 
 
 @app.on_event("startup")
-def on_startup():
+async def on_startup():
     SQLModel.metadata.create_all(engine)
+
+    # Start the background monitoring worker
+    asyncio.create_task(monitor_services())
 
 
 app.include_router(service_router)
@@ -32,6 +39,3 @@ def root():
 @app.get("/health")
 def health():
     return {"status": "healthy"}
-
-
-from app.models.health_check import HealthCheck    
