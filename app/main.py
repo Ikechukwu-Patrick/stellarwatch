@@ -1,8 +1,9 @@
 from fastapi import FastAPI
+from sqlmodel import SQLModel
 
+from app.api.service_router import router as service_router
 from app.core.config import settings
 from app.db.database import engine
-from sqlmodel import SQLModel
 from app.models.service import Service
 
 app = FastAPI(
@@ -15,6 +16,9 @@ app = FastAPI(
 @app.on_event("startup")
 def on_startup():
     SQLModel.metadata.create_all(engine)
+
+
+app.include_router(service_router)
 
 
 @app.get("/")
