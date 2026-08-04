@@ -32,3 +32,6 @@ def root():
 @app.get("/health")
 def health():
     return {"status": "healthy"}
+
+
+from app.models.health_check import HealthCheck    

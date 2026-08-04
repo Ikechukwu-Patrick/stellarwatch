@@ -4,6 +4,7 @@ from typing import Optional
 from sqlmodel import Field
 
 from app.db.base import BaseModel
+from sqlmodel import Field, Relationship
 
 
 class Service(BaseModel, table=True):
@@ -18,3 +19,10 @@ class Service(BaseModel, table=True):
     is_active: bool = True
 
     created_at: datetime = Field(default_factory=datetime.utcnow)
+
+    health_checks: list["HealthCheck"] = Relationship(
+    back_populates="service"
+)
+
+from app.models.health_check import HealthCheck
+    

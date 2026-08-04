@@ -1,6 +1,7 @@
 from sqlmodel import Session
 
 from app.models.service import Service
+from app.monitoring.health_checker import check_service
 from app.repositories.service_repository import ServiceRepository
 from app.schemas.service import ServiceCreate
 
@@ -31,3 +32,11 @@ class ServiceService:
 
         self.repository.delete(service)
         return True
+
+    def run_health_check(self, service_id: int):
+        service = self.get_service(service_id)
+
+        if service is None:
+            return None
+
+        return check_service(service)
