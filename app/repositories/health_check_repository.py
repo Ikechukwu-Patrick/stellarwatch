@@ -26,3 +26,29 @@ def get_service_history(service_id: int) -> list[HealthCheck]:
             .order_by(HealthCheck.checked_at.desc())
         )
         return list(session.exec(statement))
+
+
+def get_total_health_checks() -> int:
+    with Session(engine) as session:
+        return len(session.exec(select(HealthCheck)).all())
+
+
+def get_latest_health_checks() -> list[HealthCheck]:
+    with Session(engine) as session:
+        services = session.exec(select(HealthCheck.service_id).distinct()).all()
+
+        latest_checks = []
+
+        for service_id in services:
+            statement = (
+                select(HealthCheck)
+                .where(HealthCheck.service_id == service_id)
+                .order_by(HealthCheck.checked_at.desc())
+            )
+
+            health_check = session.exec(statement).first()
+
+            if health_check:
+                latest_checks.append(health_check)
+
+        return latest_checks
