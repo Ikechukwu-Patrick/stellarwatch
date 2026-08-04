@@ -11,6 +11,9 @@ class Settings(BaseSettings):
 
     API_V1_PREFIX: str = "/api/v1"
 
+    # Background monitoring interval (seconds)
+    MONITOR_INTERVAL: int = 60
+
     model_config = SettingsConfigDict(
         env_file=".env",
         case_sensitive=True,
