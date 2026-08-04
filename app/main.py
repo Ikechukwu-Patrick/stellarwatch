@@ -13,6 +13,8 @@ from app.api.health_check_router import router as health_check_router
 
 from app.api.health_check_router import router as health_check_router
 
+from app.api.statistics_router import router as statistics_router
+
 from app.api.health_check_router import (
     router as health_check_router,
 )
@@ -35,6 +37,8 @@ async def on_startup():
 app.include_router(service_router)
 
 app.include_router(health_check_router)
+
+app.include_router(statistics_router)
 
 
 @app.get("/")
