@@ -9,6 +9,13 @@ from app.db.database import engine
 from app.models.health_check import HealthCheck
 from app.models.service import Service
 from app.workers.monitor_worker import monitor_services
+from app.api.health_check_router import router as health_check_router
+
+from app.api.health_check_router import router as health_check_router
+
+from app.api.health_check_router import (
+    router as health_check_router,
+)
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -26,6 +33,8 @@ async def on_startup():
 
 
 app.include_router(service_router)
+
+app.include_router(health_check_router)
 
 
 @app.get("/")
