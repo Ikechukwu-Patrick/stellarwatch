@@ -15,6 +15,8 @@ from app.api.health_check_router import router as health_check_router
 
 from app.api.statistics_router import router as statistics_router
 
+from app.api.dashboard_router import router as dashboard_router
+
 from app.api.health_check_router import (
     router as health_check_router,
 )
@@ -39,6 +41,8 @@ app.include_router(service_router)
 app.include_router(health_check_router)
 
 app.include_router(statistics_router)
+
+app.include_router(dashboard_router)
 
 
 @app.get("/")
