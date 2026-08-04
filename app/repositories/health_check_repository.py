@@ -1,4 +1,4 @@
-from sqlmodel import Session
+from sqlmodel import Session, select
 
 from app.db.database import engine
 from app.models.health_check import HealthCheck
@@ -10,3 +10,19 @@ def create_health_check(health_check: HealthCheck) -> HealthCheck:
         session.commit()
         session.refresh(health_check)
         return health_check
+
+
+def get_all_health_checks() -> list[HealthCheck]:
+    with Session(engine) as session:
+        statement = select(HealthCheck).order_by(HealthCheck.checked_at.desc())
+        return list(session.exec(statement))
+
+
+def get_service_history(service_id: int) -> list[HealthCheck]:
+    with Session(engine) as session:
+        statement = (
+            select(HealthCheck)
+            .where(HealthCheck.service_id == service_id)
+            .order_by(HealthCheck.checked_at.desc())
+        )
+        return list(session.exec(statement))
