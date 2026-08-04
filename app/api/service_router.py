@@ -73,3 +73,21 @@ def delete_service(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Service not found",
         )
+
+
+@router.post("/{service_id}/check")
+def run_check(
+    service_id: int,
+    session: Session = Depends(get_session),
+):
+    service_service = ServiceService(session)
+
+    result = service_service.run_health_check(service_id)
+
+    if result is None:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Service not found",
+        )
+
+    return result
