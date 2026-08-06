@@ -1,16 +1,19 @@
 from datetime import datetime
-from typing import Optional
+from typing import TYPE_CHECKING
 
-from sqlmodel import Field
+from sqlmodel import Field, Relationship
 
 from app.db.base import BaseModel
-from sqlmodel import Field, Relationship
+
+if TYPE_CHECKING:
+    from app.models.alert import Alert
+    from app.models.health_check import HealthCheck
 
 
 class Service(BaseModel, table=True):
     __tablename__ = "services"
 
-    id: Optional[int] = Field(default=None, primary_key=True)
+    id: int | None = Field(default=None, primary_key=True)
 
     name: str
     url: str
@@ -21,8 +24,15 @@ class Service(BaseModel, table=True):
     created_at: datetime = Field(default_factory=datetime.utcnow)
 
     health_checks: list["HealthCheck"] = Relationship(
-    back_populates="service"
-)
+        back_populates="service",
+        sa_relationship_kwargs={
+            "cascade": "all, delete-orphan",
+        },
+    )
 
-from app.models.health_check import HealthCheck
-    
+    alerts: list["Alert"] = Relationship(
+        back_populates="service",
+        sa_relationship_kwargs={
+            "cascade": "all, delete-orphan",
+        },
+    )

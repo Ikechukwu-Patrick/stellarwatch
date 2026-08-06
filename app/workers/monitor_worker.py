@@ -1,5 +1,6 @@
 import asyncio
 
+import httpx
 from sqlmodel import Session, select
 
 from app.core.config import settings
@@ -13,15 +14,14 @@ async def monitor_services():
         print("Running background health checks...")
 
         with Session(engine) as session:
-            services = session.exec(
-                select(Service).where(Service.is_active == True)
-            ).all()
+            services = session.exec(select(Service).where(Service.is_active)).all()
 
             for service in services:
                 try:
                     check_service(service)
                     print(f"Checked: {service.name}")
-                except Exception as e:
-                    print(f"Failed to check {service.name}: {e}")
+
+                except httpx.HTTPError as exc:
+                    print(f"Failed to check {service.name}: {exc}")
 
         await asyncio.sleep(settings.MONITOR_INTERVAL)

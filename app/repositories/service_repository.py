@@ -35,4 +35,3 @@ class ServiceRepository:
     def delete(self, db_service: Service):
         self.session.delete(db_service)
         self.session.commit()
-        

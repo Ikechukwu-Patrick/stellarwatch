@@ -1,5 +1,3 @@
-from typing import Optional
-
 from pydantic import BaseModel, HttpUrl
 
 
@@ -10,10 +8,10 @@ class ServiceCreate(BaseModel):
 
 
 class ServiceUpdate(BaseModel):
-    name: Optional[str] = None
-    url: Optional[HttpUrl] = None
-    method: Optional[str] = None
-    is_active: Optional[bool] = None
+    name: str | None = None
+    url: HttpUrl | None = None
+    method: str | None = None
+    is_active: bool | None = None
 
 
 class ServiceRead(BaseModel):
