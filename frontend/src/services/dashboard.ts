@@ -1,4 +1,4 @@
-import api from "./api";
+import { api } from "./api";
 
 export interface DashboardStats {
   total_services: number;
@@ -7,7 +7,7 @@ export interface DashboardStats {
   total_alerts: number;
 }
 
-export async function getDashboardStats(): Promise<DashboardStats> {
-  const response = await api.get("/dashboard/stats");
-  return response.data;
+export async function getDashboardStats() {
+  const { data } = await api.get<DashboardStats>("/dashboard/stats");
+  return data;
 }
