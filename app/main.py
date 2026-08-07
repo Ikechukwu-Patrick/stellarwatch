@@ -3,23 +3,14 @@ import asyncio
 from fastapi import FastAPI
 from sqlmodel import SQLModel
 
+from app.api import alert_router
+from app.api.dashboard_router import router as dashboard_router
+from app.api.health_check_router import router as health_check_router
 from app.api.service_router import router as service_router
+from app.api.statistics_router import router as statistics_router
 from app.core.config import settings
 from app.db.database import engine
-from app.models.health_check import HealthCheck
-from app.models.service import Service
 from app.workers.monitor_worker import monitor_services
-from app.api.health_check_router import router as health_check_router
-
-from app.api.health_check_router import router as health_check_router
-
-from app.api.statistics_router import router as statistics_router
-
-from app.api.dashboard_router import router as dashboard_router
-
-from app.api.health_check_router import (
-    router as health_check_router,
-)
 
 app = FastAPI(
     title=settings.APP_NAME,
@@ -43,6 +34,8 @@ app.include_router(health_check_router)
 app.include_router(statistics_router)
 
 app.include_router(dashboard_router)
+
+app.include_router(alert_router.router)
 
 
 @app.get("/")

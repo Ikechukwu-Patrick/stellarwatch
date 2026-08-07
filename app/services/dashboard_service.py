@@ -1,41 +1,40 @@
-from app.repositories.health_check_repository import (
-    get_latest_health_checks,
-    get_total_health_checks,
-)
-from app.repositories.service_repository import ServiceRepository
-from app.schemas.dashboard import DashboardSummary
-from sqlmodel import Session
+from sqlmodel import Session, select
+
+from app.db.database import engine
+from app.models.alert import Alert
+from app.models.health_check import HealthCheck
+from app.models.service import Service
+from app.schemas.dashboard import DashboardStats
 
 
-class DashboardService:
-    def __init__(self, session: Session):
-        self.repository = ServiceRepository(session)
+def get_dashboard_stats() -> DashboardStats:
+    with Session(engine) as session:
 
-    def get_dashboard_summary(self) -> DashboardSummary:
-        services = self.repository.get_all()
+        services = session.exec(select(Service)).all()
 
         total_services = len(services)
 
-        latest_checks = get_latest_health_checks()
+        healthy_services = 0
+        down_services = 0
 
-        healthy_services = sum(
-            1 for check in latest_checks if check.is_healthy
-        )
+        for service in services:
+            latest = session.exec(
+                select(HealthCheck)
+                .where(HealthCheck.service_id == service.id)
+                .order_by(HealthCheck.checked_at.desc())
+            ).first()
 
-        unhealthy_services = total_services - healthy_services
+            if latest:
+                if latest.is_healthy:
+                    healthy_services += 1
+                else:
+                    down_services += 1
 
-        total_health_checks = get_total_health_checks()
+        total_alerts = len(session.exec(select(Alert)).all())
 
-        overall_uptime = (
-            (healthy_services / total_services) * 100
-            if total_services > 0
-            else 0.0
-        )
-
-        return DashboardSummary(
+        return DashboardStats(
             total_services=total_services,
             healthy_services=healthy_services,
-            unhealthy_services=unhealthy_services,
-            total_health_checks=total_health_checks,
-            overall_uptime=round(overall_uptime, 2),
+            down_services=down_services,
+            total_alerts=total_alerts,
         )

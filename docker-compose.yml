@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  pulseforge:
+    build: .
+    container_name: pulseforge
+
+    ports:
+      - "8000:8000"
+
+    volumes:
+      - .:/app
+
+    restart: unless-stopped

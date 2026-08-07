@@ -1,23 +1,11 @@
-from fastapi import APIRouter, Depends
-from sqlmodel import Session
+from fastapi import APIRouter
 
-from app.core.config import settings
-from app.db.session import get_session
-from app.schemas.dashboard import DashboardSummary
-from app.services.dashboard_service import DashboardService
+from app.schemas.dashboard import DashboardStats
+from app.services.dashboard_service import get_dashboard_stats
 
-router = APIRouter(
-    prefix=f"{settings.API_V1_PREFIX}/dashboard",
-    tags=["Dashboard"],
-)
+router = APIRouter(prefix="/dashboard", tags=["Dashboard"])
 
 
-@router.get(
-    "",
-    response_model=DashboardSummary,
-)
-def get_dashboard(
-    session: Session = Depends(get_session),
-):
-    service = DashboardService(session)
-    return service.get_dashboard_summary()
+@router.get("/stats", response_model=DashboardStats)
+def dashboard_stats():
+    return get_dashboard_stats()

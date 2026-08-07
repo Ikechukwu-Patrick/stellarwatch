@@ -9,19 +9,23 @@ if TYPE_CHECKING:
     from app.models.service import Service
 
 
-class HealthCheck(BaseModel, table=True):
-    __tablename__ = "health_checks"
+class Alert(BaseModel, table=True):
+    __tablename__ = "alerts"
 
     id: int | None = Field(default=None, primary_key=True)
 
     service_id: int = Field(foreign_key="services.id")
 
-    status_code: int | None = None
+    alert_type: str
 
-    response_time_ms: float | None = None
+    title: str
 
-    is_healthy: bool = False
+    message: str
 
-    checked_at: datetime = Field(default_factory=datetime.utcnow)
+    severity: str = "warning"
 
-    service: "Service" = Relationship(back_populates="health_checks")
+    is_sent: bool = False
+
+    created_at: datetime = Field(default_factory=datetime.utcnow)
+
+    service: "Service" = Relationship(back_populates="alerts")
