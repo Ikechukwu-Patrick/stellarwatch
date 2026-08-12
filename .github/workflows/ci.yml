@@ -42,7 +42,7 @@ jobs:
       - name: Run Tests
         run: |
           if [ -d tests ] && [ "$(find tests -name 'test_*.py' | wc -l)" -gt 0 ]; then
-            pytest -q
+            python -m pytest -q
           else
             echo "No tests found. Skipping pytest."
           fi
