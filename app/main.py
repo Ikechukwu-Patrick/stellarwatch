@@ -1,6 +1,7 @@
 import asyncio
 
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from sqlmodel import SQLModel
 
 from app.api import alert_router
@@ -18,6 +19,18 @@ app = FastAPI(
     debug=settings.DEBUG,
 )
 
+# Allow the React/Vite frontend to communicate with the API
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=[
+        "http://localhost:5173",
+        "http://127.0.0.1:5173",
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 @app.on_event("startup")
 async def on_startup():
@@ -28,13 +41,9 @@ async def on_startup():
 
 
 app.include_router(service_router)
-
 app.include_router(health_check_router)
-
 app.include_router(statistics_router)
-
 app.include_router(dashboard_router)
-
 app.include_router(alert_router.router)
 
 

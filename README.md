@@ -1,283 +1,114 @@
 # 🚀 PulseForge
 
-> An open-source API and service monitoring platform built with **FastAPI** and **React** for monitoring service availability, tracking uptime, measuring response times, and managing alerts.
+### Stellar & Soroban Infrastructure Monitoring Platform
+
+PulseForge is an open-source monitoring and observability platform focused on
+the **Stellar network and Soroban smart-contract ecosystem**.
+
+It provides a centralized dashboard for monitoring the availability,
+health, response time, operational status, and reliability of infrastructure
+services used by Stellar applications.
+
+PulseForge currently provides a general-purpose monitoring engine and is being
+extended with **Stellar-specific infrastructure monitoring capabilities**.
+
+The long-term goal is to provide Stellar developers, infrastructure
+operators, application teams, and ecosystem builders with a simple way to
+detect infrastructure failures, monitor network-facing services, and receive
+actionable alerts.
 
 ---
 
-## 📖 Overview
+# 🌟 Why PulseForge?
 
-PulseForge helps developers and teams monitor APIs and web services from a centralized dashboard.
+Modern Stellar applications depend on reliable infrastructure.
 
-The platform continuously tracks service health, records response times, stores historical health checks, and provides actionable alerts whenever a monitored service becomes unavailable.
+Applications may depend on services such as:
 
-The goal of PulseForge is to provide a lightweight, extensible, and developer-friendly monitoring solution similar to lightweight versions of UptimeRobot or Better Stack.
+- Stellar RPC
+- Horizon
+- Soroban RPC infrastructure
+- Stellar application APIs
+- Payment services
+- Wallet infrastructure
+- Custom Stellar ecosystem services
 
----
+When infrastructure becomes unavailable or unreliable, applications may be
+unable to:
 
-# ✨ Features
+- Read network state
+- Query accounts and balances
+- Interact with Soroban smart contracts
+- Simulate transactions
+- Submit transactions
+- Track ledger activity
+- Process payments
+- Provide reliable user experiences
 
-## Backend
+PulseForge provides a monitoring layer for these services.
 
-- RESTful API built with FastAPI
-- Create and manage monitored services
-- Run health checks
-- Record response times
-- Store health check history
-- Alert generation
-- Dashboard statistics endpoint
-- SQLAlchemy ORM
-- Alembic migrations
-- SQLite database (development)
-
----
-
-## Frontend
-
-- Modern React dashboard
-- Responsive sidebar navigation
-- Dashboard overview
-- Service statistics
-- Health monitoring pages
-- Alerts page
-- Health Checks page
-- API integration with Axios
-- React Router navigation
-- Tailwind CSS UI
+Instead of manually checking multiple endpoints, developers can register
+services with PulseForge and continuously monitor their operational health.
 
 ---
 
-# 📊 Dashboard
+# 🎯 Project Goals
 
-The dashboard provides:
+PulseForge is being developed around four major goals:
 
-- Total monitored services
-- Healthy services
-- Down services
-- Total alerts
-- Recent alerts
-- Recent health checks
-- Response time visualization
+1. **Monitor Stellar infrastructure**
+2. **Detect failures quickly**
+3. **Provide useful operational history**
+4. **Alert developers when infrastructure problems occur**
 
----
-
-# 🛠 Tech Stack
-
-## Backend
-
-- FastAPI
-- SQLAlchemy
-- Alembic
-- SQLite
-- Python
-
-## Frontend
-
-- React
-- TypeScript
-- Vite
-- Tailwind CSS
-- Axios
-- React Router
-- Lucide React
+The project starts with a reliable monitoring foundation and progressively
+adds deeper Stellar and Soroban-specific capabilities.
 
 ---
 
-# 📁 Project Structure
+# ✨ Current Features
 
-```
-pulseforge/
+## General Service Monitoring
 
-├── backend/
-│   ├── app/
-│   ├── alembic/
-│   ├── tests/
-│   └── requirements.txt
-│
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── services/
-│   │   ├── router/
-│   │   └── hooks/
-│   └── package.json
-│
-└── README.md
-```
+PulseForge currently supports:
+
+- Service registration
+- Service listing
+- Individual service lookup
+- Service deletion
+- Manual health checks
+- Automated background health checks
+- HTTP status monitoring
+- Response-time measurement
+- Healthy / unhealthy detection
+- Health-check history
+- Service history
+- Failure detection
+- Recovery detection
 
 ---
 
-# ⚙️ Getting Started
+## 🚨 Alert System
 
-## Clone the repository
+PulseForge automatically generates alerts when monitored services change
+health state.
 
-```bash
-git clone https://github.com/WideForgeLabs/pulseforge.git
+Currently supported alert events include:
 
-cd pulseforge
-```
+- Service DOWN
+- Service RECOVERED
 
----
+Alerts contain:
 
-## Backend Setup
+- Service
+- Alert title
+- Alert message
+- Severity
+- Sent status
+- Creation timestamp
 
-```bash
-cd backend
+Example:
 
-python -m venv .venv
-
-source .venv/bin/activate
-
-pip install -r requirements.txt
-
-uvicorn app.main:app --reload
-```
-
-Backend runs at:
-
-```
-http://127.0.0.1:8000
-```
-
-API Documentation:
-
-```
-http://127.0.0.1:8000/docs
-```
-
----
-
-## Frontend Setup
-
-```bash
-cd frontend
-
-npm install
-
-npm run dev
-```
-
-Frontend runs at:
-
-```
-http://localhost:5173
-```
-
----
-
-# 🔗 API Endpoints
-
-## Services
-
-```
-GET    /api/v1/services
-POST   /api/v1/services
-GET    /api/v1/services/{id}
-DELETE /api/v1/services/{id}
-POST   /api/v1/services/{id}/check
-```
-
----
-
-## Health Checks
-
-```
-GET /api/v1/health-checks
-GET /api/v1/services/{id}/history
-```
-
----
-
-## Alerts
-
-```
-GET /api/v1/alerts
-```
-
----
-
-## Statistics
-
-```
-GET /dashboard/stats
-GET /api/v1/services/{id}/stats
-```
-
----
-
-# 🚧 Current Status
-
-## Completed
-
-- Backend API
-- Database models
-- CRUD operations
-- Health check engine
-- Dashboard statistics
-- Alerts API
-- React frontend
-- Dashboard layout
-- Sidebar navigation
-- API integration
-
-## In Progress
-
-- Dashboard charts
-- Deployment
-- Authentication
-- Email notifications
-- Background workers
-
----
-
-# 🔮 Roadmap
-
-- JWT Authentication
-- PostgreSQL support
-- Redis caching
-- Celery background workers
-- Email alerts
-- SMS alerts
-- Docker support
-- Kubernetes deployment
-- Prometheus metrics
-- Grafana integration
-- WebSocket live updates
-- Dark mode
-- User accounts
-- Role-based access control
-
----
-
-# 🤝 Contributing
-
-Contributions are welcome.
-
-If you'd like to improve PulseForge:
-
-1. Fork the repository
-2. Create a feature branch
-3. Commit your changes
-4. Push your branch
-5. Open a Pull Request
-
----
-
-# 📄 License
-
-MIT License.
-
----
-
-# 👨‍💻 Author
-
-Built by **Ikechukwu Patrick**
-
-GitHub:
-https://github.com/WideForgeLabs/pulseforge
-
----
-
-# ⭐ Vision
-
-PulseForge aims to become an open-source, developer-first monitoring platform that enables teams to monitor services, visualize uptime, detect failures quickly, and respond proactively using modern cloud-native tooling.
+```text
+PulseForge API is DOWN
+Severity: critical

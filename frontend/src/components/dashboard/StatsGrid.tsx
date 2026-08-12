@@ -1,6 +1,6 @@
 import {
   Server,
-  CheckCircle,
+  CheckCircle2,
   XCircle,
   Bell,
 } from "lucide-react";
@@ -18,29 +18,37 @@ interface Props {
 
 export default function StatsGrid({ stats }: Props) {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
       <StatCard
         title="Total Services"
         value={stats.total_services}
-        icon={<Server size={28} />}
+        description="Services being monitored"
+        icon={<Server size={22} />}
+        iconClassName="bg-blue-50 text-blue-600"
       />
 
       <StatCard
         title="Healthy"
         value={stats.healthy_services}
-        icon={<CheckCircle size={28} />}
+        description="Currently operational"
+        icon={<CheckCircle2 size={22} />}
+        iconClassName="bg-green-50 text-green-600"
       />
 
       <StatCard
         title="Down"
         value={stats.down_services}
-        icon={<XCircle size={28} />}
+        description="Currently unavailable"
+        icon={<XCircle size={22} />}
+        iconClassName="bg-red-50 text-red-600"
       />
 
       <StatCard
         title="Alerts"
         value={stats.total_alerts}
-        icon={<Bell size={28} />}
+        description="Total recorded alerts"
+        icon={<Bell size={22} />}
+        iconClassName="bg-amber-50 text-amber-600"
       />
     </div>
   );
