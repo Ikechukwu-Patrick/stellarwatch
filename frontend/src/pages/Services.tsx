@@ -118,7 +118,7 @@ export default function Services() {
         </h1>
 
         <p className="mt-1 text-gray-500">
-          Manage the APIs and services monitored by PulseForge.
+          Manage the APIs and services monitored by StellerWatch.
         </p>
       </div>
 
@@ -134,7 +134,7 @@ export default function Services() {
         </h2>
 
         <p className="text-sm text-gray-500 mt-1 mb-5">
-          Add an API or service that PulseForge should monitor.
+          Add an API or service that StellerWatch should monitor.
         </p>
 
         <form

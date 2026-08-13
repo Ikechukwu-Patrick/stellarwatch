@@ -44,7 +44,7 @@ export default function RecentAlerts() {
             </p>
 
             <p className="mt-1 text-sm text-gray-500">
-              PulseForge is monitoring your configured services.
+              StellerWatch is monitoring your configured services.
             </p>
           </div>
         </div>

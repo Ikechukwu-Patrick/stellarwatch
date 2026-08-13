@@ -28,7 +28,7 @@ export default function Dashboard() {
         </h2>
 
         <p className="mt-1 text-sm text-red-600">
-          {error} Make sure the PulseForge API is running.
+          {error} Make sure the StellerWatch API is running.
         </p>
       </div>
     );
