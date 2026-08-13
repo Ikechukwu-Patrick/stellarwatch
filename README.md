@@ -1,114 +1,76 @@
-# 🚀 PulseForge
+cat > README.md <<'EOF'
+# 🌟 StellarWatch
 
-### Stellar & Soroban Infrastructure Monitoring Platform
+### Open-Source Stellar Network Health Monitoring & Observability Platform
 
-PulseForge is an open-source monitoring and observability platform focused on
-the **Stellar network and Soroban smart-contract ecosystem**.
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen)](https://github.com/Ikechukwu-Patrick/stellarwatch)
+[![Python](https://img.shields.io/badge/python-3.13%2B-blue)](https://www.python.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-009688)](https://fastapi.tiangolo.com/)
+[![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
 
-It provides a centralized dashboard for monitoring the availability,
-health, response time, operational status, and reliability of infrastructure
-services used by Stellar applications.
+StellarWatch is an open-source monitoring and observability platform focused on the **Stellar network and Soroban ecosystem**.
 
-PulseForge currently provides a general-purpose monitoring engine and is being
-extended with **Stellar-specific infrastructure monitoring capabilities**.
+It continuously monitors Stellar network health, tracks ledger state, measures response time, stores historical health data, and exposes monitoring information through a REST API.
 
-The long-term goal is to provide Stellar developers, infrastructure
-operators, application teams, and ecosystem builders with a simple way to
-detect infrastructure failures, monitor network-facing services, and receive
-actionable alerts.
+> **Mission:** Make Stellar infrastructure health visible, measurable, and easier to operate.
 
 ---
 
-# 🌟 Why PulseForge?
+## 🚀 Why StellarWatch?
 
-Modern Stellar applications depend on reliable infrastructure.
+Stellar applications depend on reliable network infrastructure.
 
-Applications may depend on services such as:
+When infrastructure becomes slow, unavailable, or falls behind the network, applications can experience:
 
-- Stellar RPC
-- Horizon
-- Soroban RPC infrastructure
-- Stellar application APIs
-- Payment services
-- Wallet infrastructure
-- Custom Stellar ecosystem services
+- Failed or delayed transactions
+- Slow account and balance queries
+- Stale network information
+- Poor application performance
+- Difficult-to-diagnose infrastructure failures
+- Reduced reliability for payment applications
 
-When infrastructure becomes unavailable or unreliable, applications may be
-unable to:
+StellarWatch provides an observability layer for these problems.
 
-- Read network state
-- Query accounts and balances
-- Interact with Soroban smart contracts
-- Simulate transactions
-- Submit transactions
-- Track ledger activity
-- Process payments
-- Provide reliable user experiences
-
-PulseForge provides a monitoring layer for these services.
-
-Instead of manually checking multiple endpoints, developers can register
-services with PulseForge and continuously monitor their operational health.
+Instead of manually checking network infrastructure, developers and infrastructure operators can continuously monitor Stellar health and review historical performance.
 
 ---
 
-# 🎯 Project Goals
+## 🎯 Project Goals
 
-PulseForge is being developed around four major goals:
+StellarWatch is being developed around four core goals:
 
-1. **Monitor Stellar infrastructure**
-2. **Detect failures quickly**
-3. **Provide useful operational history**
-4. **Alert developers when infrastructure problems occur**
+1. **Monitor Stellar network health**
+2. **Detect infrastructure problems quickly**
+3. **Provide historical network-health data**
+4. **Make Stellar infrastructure observability simple and accessible**
 
-The project starts with a reliable monitoring foundation and progressively
-adds deeper Stellar and Soroban-specific capabilities.
+The current implementation establishes the core monitoring foundation. Future iterations will expand this foundation into broader Stellar and Soroban infrastructure observability.
 
 ---
 
 # ✨ Current Features
 
-## General Service Monitoring
+## 🌐 Stellar Network Monitoring
 
-PulseForge currently supports:
+StellarWatch currently provides:
 
-- Service registration
-- Service listing
-- Individual service lookup
-- Service deletion
-- Manual health checks
-- Automated background health checks
-- HTTP status monitoring
-- Response-time measurement
-- Healthy / unhealthy detection
-- Health-check history
-- Service history
-- Failure detection
-- Recovery detection
+- Stellar network health checks
+- Latest ledger monitoring
+- Oldest ledger monitoring
+- Ledger retention monitoring
+- Network response-time measurement
+- Healthy/unhealthy status detection
+- Periodic background monitoring
+- Historical health records
+- REST API endpoints
 
----
+A live health check returns data such as:
 
-## 🚨 Alert System
-
-PulseForge automatically generates alerts when monitored services change
-health state.
-
-Currently supported alert events include:
-
-- Service DOWN
-- Service RECOVERED
-
-Alerts contain:
-
-- Service
-- Alert title
-- Alert message
-- Severity
-- Sent status
-- Creation timestamp
-
-Example:
-
-```text
-PulseForge API is DOWN
-Severity: critical
+```json
+{
+  "status": "healthy",
+  "latest_ledger": 4118963,
+  "oldest_ledger": 3998004,
+  "ledger_retention_window": 120960,
+  "response_time_ms": 889.08
+}

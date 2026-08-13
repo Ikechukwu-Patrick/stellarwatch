@@ -1,0 +1,79 @@
+digraph StellarWatch {
+    rankdir=TB;
+    bgcolor="white";
+    graph [
+        pad="0.4",
+        nodesep="0.5",
+        ranksep="0.7",
+        fontname="Arial"
+    ];
+
+    node [
+        shape=box,
+        style="rounded,filled",
+        fontname="Arial",
+        fontsize=13,
+        margin="0.22,0.14",
+        color="#334155",
+        penwidth=1.5
+    ];
+
+    edge [
+        color="#64748B",
+        penwidth=1.5,
+        arrowsize=0.8
+    ];
+
+    users [
+        label="Frontend / API Consumers",
+        fillcolor="#E0F2FE"
+    ];
+
+    api [
+        label="FastAPI\nREST API Layer",
+        fillcolor="#DCFCE7"
+    ];
+
+    monitoring [
+        label="Stellar Monitoring Service\nHealth + Ledger Analysis",
+        fillcolor="#FEF3C7"
+    ];
+
+    worker [
+        label="Background Worker\nPeriodic Health Checks",
+        fillcolor="#F3E8FF"
+    ];
+
+    client [
+        label="Stellar Client\nNetwork Requests",
+        fillcolor="#DBEAFE"
+    ];
+
+    repository [
+        label="Repository Layer\nPersistence",
+        fillcolor="#FCE7F3"
+    ];
+
+    stellar [
+        label="Stellar Network",
+        fillcolor="#E0E7FF"
+    ];
+
+    database [
+        label="Database\nStellar Health History",
+        fillcolor="#F1F5F9"
+    ];
+
+    users -> api;
+    api -> monitoring;
+
+    monitoring -> client;
+    monitoring -> repository;
+
+    worker -> monitoring;
+
+    client -> stellar;
+    repository -> database;
+
+    { rank=same; client; repository; }
+}
