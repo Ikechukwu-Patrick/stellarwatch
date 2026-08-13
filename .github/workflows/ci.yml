@@ -1,4 +1,4 @@
-name: PulseForge CI
+name: StellerWatch CI
 
 on:
   push:

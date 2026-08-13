@@ -2,7 +2,7 @@
 
 ### Open-Source Stellar Network Health Monitoring & Observability Platform
 
-[![Tests](https://img.shields.io/badge/tests-passing-brightgreen)](https://github.com/Ikechukwu-Patrick/stellarwatch)
+[![Tests](https://img.shields.io/badge/tests-passing-brightgreen)](https://github.com/WideForgeLabs/stellarwatch)
 [![Python](https://img.shields.io/badge/python-3.13%2B-blue)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-009688)](https://fastapi.tiangolo.com/)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
