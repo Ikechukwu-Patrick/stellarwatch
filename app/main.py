@@ -9,6 +9,7 @@ from app.api.dashboard_router import router as dashboard_router
 from app.api.health_check_router import router as health_check_router
 from app.api.service_router import router as service_router
 from app.api.statistics_router import router as statistics_router
+from app.api.stellar_router import router as stellar_router
 from app.core.config import settings
 from app.db.database import engine
 from app.workers.monitor_worker import monitor_services
@@ -45,6 +46,7 @@ app.include_router(health_check_router)
 app.include_router(statistics_router)
 app.include_router(dashboard_router)
 app.include_router(alert_router.router)
+app.include_router(stellar_router)
 
 
 @app.get("/")

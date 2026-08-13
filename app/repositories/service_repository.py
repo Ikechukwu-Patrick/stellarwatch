@@ -21,6 +21,10 @@ class ServiceRepository:
     def get_by_id(self, service_id: int) -> Service | None:
         return self.session.get(Service, service_id)
 
+    def get_by_name(self, name: str) -> Service | None:
+        statement = select(Service).where(Service.name == name)
+        return self.session.exec(statement).first()
+
     def update(self, db_service: Service, service: ServiceUpdate) -> Service:
         update_data = service.model_dump(exclude_unset=True)
 
