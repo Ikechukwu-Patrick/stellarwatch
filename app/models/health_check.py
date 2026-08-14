@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship
@@ -22,6 +22,6 @@ class HealthCheck(BaseModel, table=True):
 
     is_healthy: bool = False
 
-    checked_at: datetime = Field(default_factory=datetime.utcnow)
+    checked_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
 
     service: "Service" = Relationship(back_populates="health_checks")

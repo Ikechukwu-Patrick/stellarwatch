@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
 from sqlmodel import Field
 
@@ -15,4 +15,4 @@ class StellarHealth(BaseModel, table=True):
     oldest_ledger: int | None = None
     ledger_retention_window: int | None = None
     response_time_ms: float
-    checked_at: datetime = Field(default_factory=datetime.utcnow)
+    checked_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
