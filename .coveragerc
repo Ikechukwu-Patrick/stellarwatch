@@ -1,0 +1,13 @@
+[run]
+branch = True
+source = app
+omit =
+    app/main.py
+
+[report]
+exclude_also =
+    if TYPE_CHECKING:
+    raise NotImplementedError
+
+show_missing = True
+skip_covered = False
