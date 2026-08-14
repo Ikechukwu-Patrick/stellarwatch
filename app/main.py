@@ -1,4 +1,5 @@
 import asyncio
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,10 +15,30 @@ from app.core.config import settings
 from app.db.database import engine
 from app.workers.monitor_worker import monitor_services
 
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    SQLModel.metadata.create_all(engine)
+
+    # Start the background monitoring worker
+    monitor_task = asyncio.create_task(monitor_services())
+
+    yield
+
+    # Cancel the background worker during application shutdown.
+    monitor_task.cancel()
+
+    try:
+        await monitor_task
+    except asyncio.CancelledError:
+        pass
+
+
 app = FastAPI(
     title=settings.APP_NAME,
     version=settings.APP_VERSION,
     debug=settings.DEBUG,
+    lifespan=lifespan,
 )
 
 # Allow the React/Vite frontend to communicate with the API
@@ -31,14 +52,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-
-@app.on_event("startup")
-async def on_startup():
-    SQLModel.metadata.create_all(engine)
-
-    # Start the background monitoring worker
-    asyncio.create_task(monitor_services())
 
 
 app.include_router(service_router)
