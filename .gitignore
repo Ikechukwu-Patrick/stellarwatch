@@ -217,3 +217,7 @@ __marimo__/
 # Streamlit
 .streamlit/secrets.toml
 *.db
+
+.coverage
+coverage.xml
+htmlcov/
