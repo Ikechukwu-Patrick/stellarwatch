@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING
 
 from sqlmodel import Field, Relationship
@@ -21,7 +21,7 @@ class Service(BaseModel, table=True):
 
     is_active: bool = True
 
-    created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+    created_at: datetime = Field(default_factory=lambda: datetime.now(UTC))
 
     health_checks: list["HealthCheck"] = Relationship(
         back_populates="service",
