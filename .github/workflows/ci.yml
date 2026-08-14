@@ -36,7 +36,6 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
-          pip install coverage
 
       - name: Check formatting
         run: black --check . --target-version py312
@@ -48,14 +47,14 @@ jobs:
         run: |
           python -m coverage run -m pytest -q
           python -m coverage report -m
+          python -m coverage xml -o coverage.xml
 
       - name: Upload coverage report
         if: matrix.python-version == '3.13'
         uses: actions/upload-artifact@v4
         with:
           name: coverage-report
-          path: |
-            .coverage
+          path: coverage.xml
           if-no-files-found: error
 
   docker:
